@@ -1,0 +1,15 @@
+torch
+torchvision
+open_clip_torch
+faiss-cpu
+transformers
+pillow
+numpy
+matplotlib
+tqdm
+PicImageSearch
+einops
+duckduckgo-search
+ddgs
+requests
+beautifulsoup4

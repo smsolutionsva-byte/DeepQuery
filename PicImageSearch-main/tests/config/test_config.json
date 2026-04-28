@@ -1,0 +1,11 @@
+{
+  "ascii2d": {
+    "base_url": ""
+  },
+  "google": {
+    "cookies": ""
+  },
+  "saucenao": {
+    "api_key": "a4ab3f81009b003528f7e31aed187fa32a063f58"
+  }
+}

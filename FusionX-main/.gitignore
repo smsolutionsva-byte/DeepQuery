@@ -1,0 +1,8 @@
+# Ignore dataset payloads; keep folder + README placeholders if present.
+INSERT_DATASET/**
+!INSERT_DATASET/
+!INSERT_DATASET/README.txt
+
+project/INSERT_DATASET/**
+!project/INSERT_DATASET/
+!project/INSERT_DATASET/README.txt

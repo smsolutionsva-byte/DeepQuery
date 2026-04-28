@@ -1,0 +1,74 @@
+name: Update Copyseeker Tokens
+
+on:
+  schedule:
+    - cron: "0 0 * * 6"
+  workflow_dispatch:
+
+jobs:
+  update-tokens:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run update script
+        run: uv run python .github/scripts/update_copyseeker_tokens.py
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          uv run ruff format
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run tests
+        if: steps.check-changes.outputs.changes == 'true'
+        id: run-tests
+        run: |
+          uv run python -m pytest tests/test_copyseeker.py -v
+          if [ $? -eq 0 ]; then
+            echo "tests_passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "tests_passed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit changes
+        if: steps.check-changes.outputs.changes == 'true' && steps.run-tests.outputs.tests_passed == 'true'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add PicImageSearch/constants.py
+          git commit -m "fix(copyseeker): update the \`next-action\` tokens"
+
+      - name: Create Pull Request
+        if: steps.check-changes.outputs.changes == 'true' && steps.run-tests.outputs.tests_passed == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          title: "fix(copyseeker): update the `next-action` tokens"
+          body: |
+            This PR was automatically created by GitHub Actions to update the Copyseeker `next-action` tokens.
+
+            The Copyseeker website may have updated its token values, requiring an update to our code to maintain compatibility.
+
+            ✅ All tests for Copyseeker functionality have passed with the updated tokens.
+          branch: bot/update-copyseeker-tokens
+          base: main
+          delete-branch: true
+
+      - name: Report test failure
+        if: steps.check-changes.outputs.changes == 'true' && steps.run-tests.outputs.tests_passed == 'false'
+        run: |
+          echo "::warning::Copyseeker tokens were updated but tests failed. No PR was created."

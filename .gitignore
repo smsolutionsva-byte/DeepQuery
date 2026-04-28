@@ -1,0 +1,51 @@
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.ENV/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dataset directories
+project/INSERT_DATASET/datasets/
+project/INSERT_DATASET/images/
+project/INSERT_DATASET/paired_images/
+BIT_CD-master/datasets/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Model checkpoints and caches
+*.pt
+*.pth
+*.ckpt
+
+# Search/index outputs
+project/search_index/
+project/output/

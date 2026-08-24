@@ -81,4 +81,4 @@ python main.py
 ---
 
 ## 👤 Author
-- **Shivansh Mukhia** — [GitHub](https://github.com/smsolutionsva-byte) • [Email](mailto:sm.solutions.va@gmail.com)
+- **N Gnanendra Reddy** — [GitHub](https://github.com/smsolutionsva-byte) • [Email](mailto:sm.solutions.va@gmail.com)
